@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.grant</groupId>
+  <artifactId>fast-tool</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>fast-tool</name>
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>apollo</groupId>
+      <artifactId>com.xforceplus.apollo.utils</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                  <source>8</source>
+                  <target>8</target>
+              </configuration>
+          </plugin>
+          <!--<plugin>-->
+              <!--<groupId>org.apache.maven.plugins</groupId>-->
+              <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+              <!--<version>2.9</version>-->
+              <!--<executions>-->
+                  <!--<execution>-->
+                      <!--<id>attach-javadocs</id>-->
+                      <!--<goals>-->
+                          <!--<goal>jar</goal>-->
+                      <!--</goals>-->
+                      <!--<configuration>-->
+                          <!--<failOnError>false</failOnError>-->
+                      <!--</configuration>-->
+                  <!--</execution>-->
+              <!--</executions>-->
+          <!--</plugin>-->
+      </plugins>
+  </build>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://114.55.251.46:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://114.55.251.46:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <!--指定库-->
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Public Repository</name>
+            <url>http://114.55.251.46:8081/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://114.55.251.46:8081/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://114.55.251.46:8081/repository/maven-snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    <!--指定插件库-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>http://114.55.251.46:8081/repository/maven-central/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
