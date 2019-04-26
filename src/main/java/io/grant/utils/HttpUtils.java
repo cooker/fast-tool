@@ -116,8 +116,9 @@ public class HttpUtils {
             response = httpclient.execute(httpGet);
             status = response.getStatusLine().getStatusCode();
             // 判断返回状态是否为200
+            resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
             if (status == 200) {
-                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+
             } else {
                 logger.warn("接口调用：{} >> {}", url, status);
             }
@@ -169,10 +170,11 @@ public class HttpUtils {
             response = httpClient.execute(httpPost);
             status = response.getStatusLine().getStatusCode();
             // 判断返回状态是否为200
+            resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
             if (status == 200) {
-                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+
             } else {
-                logger.error("{} >> {} >> {}", status, url, EntityUtils.toString(response.getEntity(), "UTF-8"));
+                logger.error("{} >> {} >> {}", status, url, resultString);
             }
         } catch (Exception e) {
             logger.error("Post请求调用异常：", e);
@@ -288,7 +290,7 @@ public class HttpUtils {
                 throw new RuntimeException(e);
             }
         } finally {
-            IOUtils.closeQuietly(response, httpClient);
+            CommonTools.close(response, httpClient);
         }
         if (SHOW_REQRESP_LOGS) {
             logger.info("响应 HTTP {} \n {} >> {}", postUrl, status, retStr);
@@ -318,11 +320,11 @@ public class HttpUtils {
             response = httpClient.execute(httpPost);
             status = response.getStatusLine().getStatusCode();
             // 判断返回状态是否为200
+            resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
             if (status == 200) {
-                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+
             } else {
-                logger.warn("接口调用：{} >> {} >> {}", url, status,
-                        EntityUtils.toString(response.getEntity(), "UTF-8"));
+                logger.warn("接口调用：{} >> {} >> {}", url, status, resultString);
             }
         } catch (Exception e) {
             logger.error("Post json请求调用异常：", e);
@@ -359,7 +361,7 @@ public class HttpUtils {
         // 设置连接池
         connMgr = new PoolingHttpClientConnectionManager(registry);
         // 设置连接池大小
-        connMgr.setMaxTotal(100);
+        connMgr.setMaxTotal(1000);
         connMgr.setDefaultMaxPerRoute(connMgr.getMaxTotal());
 
         RequestConfig.Builder configBuilder = RequestConfig.custom();
