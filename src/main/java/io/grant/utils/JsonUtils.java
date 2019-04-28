@@ -10,15 +10,15 @@ import java.util.List;
 public class JsonUtils {
     final static JacksonUtil ref = JacksonUtil.getInstance();
 
-    public <T> T fromJson(String json, Class<T> clazz) {
+    public static <T> T fromJson(String json, Class<T> clazz) {
         return ref.fromJson(json, clazz);
     }
 
-    public  <T> List<T>  fromJson2List(String json, Class<T> cl){
+    public static <T> List<T>  fromJson2List(String json, Class<T> cl){
         return ref.fromJsonToList(json, cl);
     }
 
-    public String toJson(Object object) {
+    public static String toJson(Object object) {
         return ref.toJson(object);
     }
 

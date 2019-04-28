@@ -79,9 +79,9 @@ public class HttpUtils {
         IS_THROWS_ERROR = isThrowsError;
     }
 
-    public static Pair<String, String> doGet_1(String url, Map<String, Object> param) {
+    public static Pair<String, String> doGet_1(String url, Map<String, Object> param, Header[] headers) {
         // 创建Httpclient对象
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+        CloseableHttpClient httpclient = getHttpClient();
         // 设置请求和传输超时时间
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(SOCKET_TIMEOUT)
@@ -112,6 +112,9 @@ public class HttpUtils {
             // 创建http GET请求
             HttpGet httpGet = new HttpGet(uri);
             httpGet.setConfig(requestConfig);
+            if (headers != null){
+                httpGet.setHeaders(headers);
+            }
             // 执行请求
             response = httpclient.execute(httpGet);
             status = response.getStatusLine().getStatusCode();
@@ -128,7 +131,7 @@ public class HttpUtils {
                 throw new RuntimeException(e);
             }
         } finally {
-            CommonTools.close(response, httpclient);
+            CommonTools.close(response);
         }
         if (SHOW_REQRESP_LOGS) {
             logger.info("GET 响应 HTTP {} \n {} >> {}", Objects.toString(uri), status, resultString);
@@ -137,7 +140,7 @@ public class HttpUtils {
     }
 
     public static String doGet(String url, Map<String, Object> param) {
-        return doGet_1(url, param).getValue();
+        return doGet_1(url, param, null).getValue();
     }
 
     public static String doGet(String url) {
@@ -182,7 +185,7 @@ public class HttpUtils {
                 throw new RuntimeException(e);
             }
         } finally {
-            CommonTools.close(response, httpClient);
+            CommonTools.close(response);
         }
 
         return Pair.of(status + "", resultString);
@@ -290,7 +293,7 @@ public class HttpUtils {
                 throw new RuntimeException(e);
             }
         } finally {
-            CommonTools.close(response, httpClient);
+            CommonTools.close(response);
         }
         if (SHOW_REQRESP_LOGS) {
             logger.info("响应 HTTP {} \n {} >> {}", postUrl, status, retStr);
@@ -332,7 +335,7 @@ public class HttpUtils {
                 throw new RuntimeException(e);
             }
         } finally {
-            CommonTools.close(response, httpClient);
+            CommonTools.close(response);
         }
         if (SHOW_REQRESP_LOGS) {
             logger.info("POST 响应 HTTP {} \n {} >> {}", url, status, resultString);
